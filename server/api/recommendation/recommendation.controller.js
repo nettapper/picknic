@@ -12,8 +12,9 @@
 var _ = require('lodash');
 var Parkland = require('../parkland/parkland.model');
 var Playground = require('../playground/playground.model');
-var Tree = require('../tree/tree.model');
 var Recommendation = require('./recommendation.model');
+var SprayPark = require('../spray_park/spray_park.model');
+var Tree = require('../tree/tree.model');
 
 function handleError(res, statusCode) {
   statusCode = statusCode || 500;
@@ -101,11 +102,16 @@ exports.location = function(req, res) {
    .geometry(search_polygon).lean().exec(function(playground_err, playground_ret) {
     if(playground_err) return handleError(playground_err);
 
+  // Spray Parks
+  var spray_parks = SprayPark.find().where('location').within()
+   .geometry(search_polygon).lean().exec(function(spray_park_err, spray_park_ret) {
+    if(spray_park_err) return handleError(spray_park_err);
+
   // Trees
   var trees = []
   var num_things = parkland_ret.length;
   for(var parkland of parkland_ret) {
-    // Find trees within playground
+    // Find trees within parkland
     var sub_trees = Tree.find()
      .where('location').within().geometry(parkland.geometry).lean().exec(function(tree_err, tree_ret) {
       if(tree_err) return handleError(tree_err);    
@@ -116,13 +122,15 @@ exports.location = function(req, res) {
         res.json({
           parklands: parkland_ret,
           trees: trees,
-          playgrounds: playground_ret
+          playgrounds: playground_ret,
+          spray_parks: spray_park_ret
         });
       }
      }); // Trees
   }
 
 
+   }); // Spray Parks
    }); // Playgrounds
    }); // Parklands
 }

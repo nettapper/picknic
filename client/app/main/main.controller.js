@@ -15,6 +15,15 @@
       this.tree_options = {
         icon: '/assets/images/tree16.png'
       };
+      this.playground_options = {
+        icon: '/assets/images/playground.png'
+      };
+      this.spray_park_options = {
+        icon: '/assets/images/spraypark.png'
+      };
+      this.soccer_field_options = {
+        icon: '/assets/images/soccer.png'
+      };
       this.fill = { color: '#2c8aa7', opacity: '0.3' };
       this.treeslider = 50;
       this.marker = {
@@ -186,9 +195,13 @@
       var lng = this.circles[0].center.longitude;
       var radius = Number(this.circles[0].radius) / 1000;
       this.trees = [];
+      this.playgrounds = [];
+      this.spray_parks = [];
       this.$http.get('/api/recommendations/' + lng.toString() + '/' + lat.toString() + '?radius=' + radius.toString()).then(response => {
         this.parks = response.data.parklands;
         this.trees = response.data.trees;
+        this.playgrounds = response.data.playgrounds;
+        this.spray_parks = response.data.spray_parks;
       });
     }
 
