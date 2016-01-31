@@ -12,6 +12,8 @@
       this.tree_options = {
         icon: '/assets/images/tree16.png'
       };
+      this.fill = { color: '#2c8aa7', opacity: '0.3' };
+      this.treeslider = 50;
       this.marker = {
         id: 'me',
         coords: {latitude: 53.5, longitude: -113.5},

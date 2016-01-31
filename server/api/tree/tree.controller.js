@@ -64,6 +64,7 @@ exports.index = function (req, res) {
   function isInteger(value) {
     return (!isNaN(value) && Math.floor(value) === value);
   }
+
   var query_dict = req.query;
   var skip_num = 0;
   if ('skip' in query_dict) {
@@ -113,8 +114,21 @@ exports.destroy = function (req, res) {
 };
 
 // Find all trees in the given lat lng
-exports.location = function(req, res) {
+exports.location = function (req, res) {
+  function searchigon(x, y, r) {
+    var x_multi = 2;
 
+    // todo: shift w/ the x & y coords
+    var topLeft = [-(1 / 2 * r) * x_multi + x, (Math.sqrt(3) / 2 * r) + y];
+    var topRight = [(1 / 2 * r) * x_multi + x, (Math.sqrt(3) / 2 * r) + y];
+    var farRight = [r * x_multi + x, y];
+    var botRight = [(1 / 2 * r) * x_multi + x, -(Math.sqrt(3) / 2 * r) + y];
+    var botLeft = [-(1 / 2 * r) * x_multi + x, -(Math.sqrt(3) / 2 * r) + y];
+    var farLeft = [-r * x_multi + x, y];
+    return [[
+      topLeft, topRight, farRight, botRight, botLeft, farLeft, topLeft
+    ]]
+  }
   var query_dict = req.query;
   var radius = 0.001;
   if ('radius' in query_dict) {
@@ -124,6 +138,7 @@ exports.location = function(req, res) {
   var deg_radius = radius * (1 / 110.574);
   var lat = Number(req.params.lat);
   var lng = Number(req.params.lng);
+  /*
   var searchSquare = [[
     [lng - deg_radius, lat - deg_radius],
     [lng - deg_radius, lat + deg_radius],
@@ -131,8 +146,10 @@ exports.location = function(req, res) {
     [lng + deg_radius, lat - deg_radius],
     [lng - deg_radius, lat - deg_radius]
   ]];
+  */
+  var searchHex = searchigon(lng, lat, deg_radius);
   Tree.find().where('location').within().geometry(
-    {type: 'Polygon', coordinates: searchSquare}
+    {type: 'Polygon', coordinates: searchHex}
 //  Tree.find().where('coordinates').near(  // this isn't working..
 //    { center: [lat, lng], maxDistance: 50 }
     )
