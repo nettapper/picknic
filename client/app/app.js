@@ -22,6 +22,6 @@ angular.module('picknicApp', [
     uiGmapGoogleMapApiProvider.configure({
       key: 'AIzaSyCphBVBdtZk0AbGNTrDDK7sELY6CaY-WaM',
       v: '3.20',
-      libraries: 'weather,geometry,visualization'
+      libraries: 'weather,geometry,visualization,places'
     });
   });

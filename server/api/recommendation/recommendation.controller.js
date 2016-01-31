@@ -91,26 +91,27 @@ exports.location = function(req, res) {
   var search_polygon = {type: 'Polygon', coordinates: search_square};
   
   // Parklands
-  var parklands = Parkland.find({}, {'_id':0}).where('geometry').intersects()
+  // TODO: figure out duplicate so i can exclude id...
+  var parklands = Parkland.find({}, {'_id':1}).where('geometry').intersects()
    .geometry(search_polygon).lean().exec(function(parkland_err, parkland_ret) {
      if(parkland_err) return handleError(parkland_err);
 
   // Trees
-  var trees = Tree.find({}, {'_id': 0,'diameter_breast_height':0,'location_type': 0,'condition_percent':0,'species_common':0})
+  var trees = Tree.find({}, {'_id': 1,'diameter_breast_height':0,'location_type': 0,'condition_percent':0,'species_common':0})
    .where('location').within().geometry(search_polygon).lean().exec(function(tree_err, tree_ret) {
     if(tree_err) return handleError(tree_err);
-    
+    /*
   // Playgrounds
   var playgrounds = Playground.find({}, {'_id':0}).where('location').within()
    .geometry(search_polygon).lean().exec(function(playground_err, playground_ret) {
     if(playground_err) return handleError(playground_err);
-    
+    */
     // Return the JSON with all of our recommendations
     res.json({
       parklands: parkland_ret,
       trees: tree_ret,
-      playgrounds: playground_ret
-    });
+   /*   playgrounds: playground_ret
+    }); */
 
    }); // Playgrounds
    }); // Trees
