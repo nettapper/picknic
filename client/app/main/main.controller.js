@@ -214,11 +214,7 @@
 
     sliderChange() {
       this.circles[0].radius = Number(this.slider);
-<<<<<<< HEAD
       this.handleEntities();
-=======
-//      this.handleEntities();
->>>>>>> 6b255a367b1a290b78b0942f03082b159619cd84
     }
 
     deleteThing(thing) {
