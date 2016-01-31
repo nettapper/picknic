@@ -43,14 +43,13 @@
       this.options = {scrollwheel: false};
 
       //Range Slider
-      this.slider = 1000;
       this.circles = [
         {
           id: 1,
           center: {
             latitude: 53.5, longitude: -113.5
           },
-          radius: 1, stroke: {color: '#ffcccc', weight: 3, opacity: 1},
+          radius: 1000, stroke: {color: '#ffcccc', weight: 3, opacity: 1},
           fill: {
             color: '#ffcccc', opacity: 0.25
           }
@@ -75,8 +74,8 @@
         });
         this.handleGeoLocation();
 
-	//AutoComplete for search
-	this.autoComplete();
+        //AutoComplete for search
+        this.autoComplete();
       });
     }
 
@@ -148,11 +147,6 @@
 
     handleEntities() {
       // TODO: LINE 1295 of angular-google-maps.js CHANGE TO ARROW NOTATION, read README
-      this.handleParks();
-      this.handleTrees();
-    }
-
-    handleParks() {
       var lat = this.circles[0].center.latitude;
       var lng = this.circles[0].center.longitude;
       var radius = Number(this.circles[0].radius) / 1000;
@@ -192,10 +186,10 @@
       var lng = this.circles[0].center.longitude;
       var radius = Number(this.circles[0].radius) / 1000;
       this.trees = [];
-      this.$http.get('/api/trees/' + lng.toString() + '/' + lat.toString() + '?radius=' + radius.toString()).then(response => {
-        this.trees = response.data;
+      this.$http.get('/api/recommendations/' + lng.toString() + '/' + lat.toString() + '?radius=' + radius.toString()).then(response => {
+        this.parks = response.data.parklands;
+        this.trees = response.data.trees;
       });
-
     }
 
     addThing() {
@@ -207,7 +201,11 @@
 
     sliderChange() {
       this.circles[0].radius = Number(this.slider);
+<<<<<<< HEAD
       this.handleEntities();
+=======
+//      this.handleEntities();
+>>>>>>> 6b255a367b1a290b78b0942f03082b159619cd84
     }
 
     deleteThing(thing) {

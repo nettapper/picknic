@@ -123,7 +123,7 @@ exports.destroy = function (req, res) {
 exports.location = function (req, res) {
 
   var query_dict = req.query;
-  var radius = 0.001;
+  var radius = 1.0;
   if ('radius' in query_dict) {
     radius = Number(query_dict['radius']);
   }
