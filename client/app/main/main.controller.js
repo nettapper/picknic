@@ -4,11 +4,14 @@
 
   class MainController {
 
-    constructor($http, uiGmapGoogleMapApi) {
+    constructor($http, $modal, uiGmapGoogleMapApi) {
       this.$http = $http;
+      this.$modal = $modal;
       this.awesomeThings = [];
       this.parks = [];
       this.trees = [];
+      this.res = [];
+      this.$modalInstance = {};
       this.tree_options = {
         icon: '/assets/images/tree16.png'
       };
@@ -24,6 +27,8 @@
       this.initialLocation = {};
       this.formData = {children: ""};
       this.weather = {};
+
+      this.events = {click : function() {console.log("CLICK");}};
 
       // created after tiles loaded
       this.g_map_obj = {};
@@ -60,7 +65,7 @@
         this.weather = response.data;
       });
 
-      this.handleParks();
+      this.handleEntities();
 
       uiGmapGoogleMapApi.then(maps => {
         // Initialize the geoencoder
@@ -89,7 +94,7 @@
 					this.marker.options = { icon: '/assets/images/marker32.png' };
 					this.circles[0].center.latitude = results[0].geometry.location.G;
 					this.circles[0].center.longitude = results[0].geometry.location.K;
-					this.handleParks();
+					this.handleEntities();
 				} else {
 					alert('Geocode was not successful for the following reason: ' + status);
 				}
@@ -117,7 +122,7 @@
           this.circles[0].center.latitude = position.coords.latitude;
           this.circles[0].center.longitude = position.coords.longitude;
           this.circles[0].radius = 1000;
-          this.handleParks();
+          this.handleEntities();
         }, () => {
           this.handleNoGeolocation(this.browserSupportFlag);
         });
@@ -153,9 +158,34 @@
       var radius = Number(this.circles[0].radius) / 1000;
       this.parks = [];
       this.$http.get('/api/parklands/' + lng.toString() + '/' + lat.toString() + '?radius=' + radius.toString()).then(response => {
-        this.parks = response.data;
+        this.res = response.data;
+        
+        this.parks = this.res;
+      }).then( () => {
+        for (var i = 0; i < this.res.length; i++) {
+          var t_res = this.parks[i];
+          this.res[i].events = { click : () => { 
+            this.$modalInstance = this.$modal.open({
+              animation: true,
+              templateUrl: 'myModalContent.html',
+              size: "lg",
+              resolve: {
+                stuff : function() {return "Asdfsadf";}
+              }
+            })
+          }};
+        };
       });
+
     }
+
+    ok() {
+      this.$modalInstance.close($scope.selected.item);
+    };
+
+    cancel() {
+        this.$modalInstance.dismiss('cancel');
+    };
 
     handleTrees() {
       var lat = this.circles[0].center.latitude;
@@ -177,7 +207,7 @@
 
     sliderChange() {
       this.circles[0].radius = Number(this.slider);
-      this.handleParks();
+      this.handleEntities();
     }
 
     deleteThing(thing) {
