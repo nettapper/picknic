@@ -12,6 +12,7 @@
       this.tree_options = {
         icon: '/assets/images/tree16.png'
       };
+      this.treeslider = 50;
       this.marker = {
         id: 'me',
         coords: {latitude: 53.5, longitude: -113.5},
@@ -142,7 +143,9 @@
     handleEntities() {
       // TODO: LINE 1295 of angular-google-maps.js CHANGE TO ARROW NOTATION, read README
       this.handleParks();
-      this.handleTrees();
+      if (this.trees !== "no") {
+        this.handleTrees();
+      }
     }
 
     handleParks() {
