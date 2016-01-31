@@ -13,10 +13,13 @@
         icon: '/assets/images/tree16.png'
       };
       this.playground_options = {
-        icon: '/assets/images/logo/logo32.png'
+        icon: '/assets/images/playground.png'
       };
       this.spray_park_options = {
-        icon: '/assets/images/logo/logo64.png'
+        icon: '/assets/images/spraypark.png'
+      };
+      this.soccer_field_options = {
+        icon: '/assets/images/soccer.png'
       };
       this.fill = { color: '#2c8aa7', opacity: '0.3' };
       this.treeslider = 50;
