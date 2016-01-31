@@ -57,7 +57,7 @@
         this.weather = response.data;
       });
 
-      this.handleParks();
+      this.handleEntities();
 
       uiGmapGoogleMapApi.then(maps => {
         // Initialize the geoencoder
@@ -102,7 +102,7 @@
             this.circles[0].center.latitude = results[0].geometry.location.G;
             this.circles[0].center.longitude = results[0].geometry.location.K;
           }
-          this.handleParks();
+          this.handleEntities();
         } else {
           alert('Geocode was not successful for the following reason: ' + status);
         }
@@ -130,7 +130,7 @@
           this.circles[0].center.latitude = position.coords.latitude;
           this.circles[0].center.longitude = position.coords.longitude;
           this.circles[0].radius = 1000;
-          this.handleParks();
+          this.handleEntities();
         }, () => {
           this.handleNoGeolocation(this.browserSupportFlag);
         });
@@ -156,29 +156,15 @@
 
     handleEntities() {
       // TODO: LINE 1295 of angular-google-maps.js CHANGE TO ARROW NOTATION, read README
-      this.handleParks();
-      this.handleTrees();
-    }
-
-    handleParks() {
       var lat = this.circles[0].center.latitude;
       var lng = this.circles[0].center.longitude;
       var radius = Number(this.circles[0].radius) / 1000;
       this.parks = [];
-      this.$http.get('/api/parklands/' + lng.toString() + '/' + lat.toString() + '?radius=' + radius.toString()).then(response => {
-        this.parks = response.data;
-      });
-    }
-
-    handleTrees() {
-      var lat = this.circles[0].center.latitude;
-      var lng = this.circles[0].center.longitude;
-      var radius = Number(this.circles[0].radius) / 1000;
       this.trees = [];
-      this.$http.get('/api/trees/' + lng.toString() + '/' + lat.toString() + '?radius=' + radius.toString()).then(response => {
-        this.trees = response.data;
+      this.$http.get('/api/recommendations/' + lng.toString() + '/' + lat.toString() + '?radius=' + radius.toString()).then(response => {
+        this.parks = response.data.parklands;
+        this.trees = response.data.parklands;
       });
-
     }
 
     addThing() {
@@ -190,7 +176,7 @@
 
     sliderChange() {
       this.circles[0].radius = Number(this.slider);
-      this.handleParks();
+      this.handleEntities();
     }
 
     deleteThing(thing) {
