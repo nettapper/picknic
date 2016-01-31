@@ -28,7 +28,7 @@
   <ui-gmap-circle ng-repeat="c in main.circles track by c.id" center="c.center" stroke="c.stroke" fill="c.fill"
                   radius="c.radius" options='""'></ui-gmap-circle>
   <ui-gmap-polygon ng-repeat="p in main.parks track by p._id" path="p.geometry"
-                   fill="{ color: '#2c8aa7', opacity: '0.3' }"
+                   fill="main.fill"
                    stroke="{ color: '#2c8aa7', weight: 3, opacity: '1.0' }" visible="true" geodesic="true" fit="false"
                    editable="false" static="true" ng-cloak=""></ui-gmap-polygon>
   <ui-gmap-markers idKey="'_id'" models="main.trees" coords="'location'"
@@ -86,7 +86,7 @@
 </div>
 
 <div class="panel panel-default">
-<div class="panel-heading">Tips</div>
+<div class="panel-heading">Picnic Tips</div>
 <div class="panel-body">
   <h3><span class="info">{{main.weather.main.temp - 273.15 | number:0}}°C</span> in Edmonton</h3>
 <h4><span class="info">{{main.weather.weather[0].main}}</span> with a <span class="info">{{main.weather.weather[0].description}}</span></h4>

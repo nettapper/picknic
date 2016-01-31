@@ -12,6 +12,7 @@
       this.tree_options = {
         icon: '/assets/images/tree16.png'
       };
+      this.fill = { color: '#2c8aa7', opacity: '0.3' };
       this.treeslider = 50;
       this.marker = {
         id: 'me',
@@ -143,9 +144,7 @@
     handleEntities() {
       // TODO: LINE 1295 of angular-google-maps.js CHANGE TO ARROW NOTATION, read README
       this.handleParks();
-      if (this.trees !== "no") {
-        this.handleTrees();
-      }
+      this.handleTrees();
     }
 
     handleParks() {
