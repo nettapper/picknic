@@ -34,6 +34,7 @@
         }
       };
       this.options = {scrollwheel: false};
+
       //Range Slider
       this.slider = 1000;
       this.circles = [
@@ -61,11 +62,14 @@
 
       uiGmapGoogleMapApi.then(maps => {
         // Initialize the geoencoder
-        var geocoder = new google.maps.Geocoder();
+        this.geocoder = new google.maps.Geocoder();
         document.getElementById('submit').addEventListener('click', () => {
-          this.geocodeAddress(geocoder, this.g_map_obj);
+          this.geocodeAddress(this.geocoder, this.g_map_obj);
         });
         this.handleGeoLocation();
+
+	//AutoComplete for search
+	this.autoComplete();
       });
     }
 
@@ -176,6 +180,16 @@
 
     deleteThing(thing) {
       this.$http.delete('/api/things/' + thing._id);
+    }
+
+    autoComplete(){
+      var input = document.getElementById("address");
+      var autocomplete = new google.maps.places.Autocomplete(input);
+      //autocomplete.bindTo('bounds', map);
+
+      autocomplete.addListener('place_changed', () => {
+        this.geocodeAddress(this.geocoder, this.g_map_obj);
+      });
     }
   }
 
