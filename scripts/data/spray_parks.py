@@ -30,8 +30,8 @@ for column in obj["meta"]["view"]["columns"]:
 
 # Set Up Mongo Connection
 mongo = pymongo.MongoClient()
-db = mongo.picknic
-spray_parks = db.spray_parks
+db = mongo["picknic-dev"]
+spray_parks = db.sprayparks
 
 # Clear all existing spray parks
 print("Removing existing 'spray parks' data...")
