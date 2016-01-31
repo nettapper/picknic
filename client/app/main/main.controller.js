@@ -36,14 +36,13 @@
       this.options = {scrollwheel: false};
 
       //Range Slider
-      this.slider = 1000;
       this.circles = [
         {
           id: 1,
           center: {
             latitude: 53.5, longitude: -113.5
           },
-          radius: 1, stroke: {color: '#ffcccc', weight: 3, opacity: 1},
+          radius: 1000, stroke: {color: '#ffcccc', weight: 3, opacity: 1},
           fill: {
             color: '#ffcccc', opacity: 0.25
           }
@@ -148,7 +147,7 @@
       this.trees = [];
       this.$http.get('/api/recommendations/' + lng.toString() + '/' + lat.toString() + '?radius=' + radius.toString()).then(response => {
         this.parks = response.data.parklands;
-        this.trees = response.data.parklands;
+        this.trees = response.data.trees;
       });
     }
 
