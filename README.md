@@ -1,4 +1,10 @@
-# picknic
+# Picknic
+
+![Picknic Screenshot](/Picknic.png "Picknic Screenshot")
+
+HackED Hackathon 2016 Submission.
+
+Locally sourced data and free range programmers provide high quality cruelty free picnic recommendations.
 
 This project was generated with the [Angular Full-Stack Generator](https://github.com/DaftMonk/generator-angular-fullstack) version 3.0.0.
 
