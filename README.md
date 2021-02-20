@@ -1,8 +1,10 @@
 # Picknic
 
-![Picknic Screenshot](/Picknic.png "Picknic Screenshot")
+**Winning submission** at HackED Hackathon 2016.
 
-HackED Hackathon 2016 Submission.
+Using Edmonton's open data (320k trees, parks, plagrounds, and more) you can find the best picnic spot from the comfort of your home.
+
+![Picknic Screenshot](/Picknic.png "Picknic Screenshot")
 
 Locally sourced data and free range programmers provide high quality cruelty free picnic recommendations.
 
